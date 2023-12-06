@@ -58,7 +58,6 @@ function App() {
 }
 
 function Header() {
-  //   const style = { color: 'red', fontSize: '48px', textTransform: 'uppercase' };
   const style = {};
 
   return (
@@ -85,36 +84,22 @@ function Menu() {
       ) : (
         <p>We're still working on our menu. Please come back later :)</p>
       )}
-
-      {/* <Pizza
-        name="Pizza Spinaci"
-        ingredient="Tomato, mozarella, spinach, and ricotta cheese"
-        photoName="pizzas/spinaci.jpg"
-        price={10}
-      />
-
-      <Pizza
-        name="Pizza Funghi"
-        ingredient="Tomato, mushrooms"
-        photoName="pizzas/funghi.jpg"
-        price={12}
-      /> */}
     </main>
   );
 }
 
-function Pizza(props) {
-  console.log(props);
+function Pizza({ pizzaObj }) {
+  console.log(pizzaObj);
 
-  if (props.pizzaObj.soldOut) return null;
+  if (pizzaObj.soldOut) return null;
 
   return (
     <li className="pizza">
-      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
-        <h3>{props.pizzaObj.name}</h3>
-        <p>{props.pizzaObj.ingredients}</p>
-        <span>{props.pizzaObj.price}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.price}</span>
       </div>
     </li>
   );
@@ -127,15 +112,10 @@ function Footer() {
   const isOpen = hour >= openHour && hour <= closeHour;
   console.log(isOpen);
 
-  //   if (hour >= openHour && hour <= closeHour) alert("We're currently open!");
-  //   else alert("Sorry we're closed");
-
-  //   if (!isOpen) return <p>CLOSED</p>;
-
   return (
     <footer className="footer">
       {isOpen ? (
-        <Order closeHours={closeHour} />
+        <Order closeHours={closeHour} openHours={openHour} />
       ) : (
         <p>
           We're happy to welcome you between {openHour}:00 to {closeHour}:00.
@@ -145,24 +125,21 @@ function Footer() {
   );
 }
 
-function Order(props) {
+function Order({ closeHours, openHours }) {
   return (
     <div className="order">
       <p>
-        We're open until {props.closeHours}:00. Come visit us or order online.
+        We're open from {openHours}:00 to {closeHours}:00. Come visit us or
+        order online.
       </p>
       <button className="btn">Order</button>
     </div>
   );
 }
 
-// React v18
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
-
-// React before 18
-// ReactDOM.render(<App />, document.getElementById('root'));
